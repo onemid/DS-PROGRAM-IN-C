@@ -15,18 +15,29 @@
 int top = -1;
 int mapSize = 1;
 
-void DFS();
+int visited[MAX_MAP] = {FALSE};
+int ringMap[MAX_MAP][MAX_MAP];
+int routeTrack[MAX_MAP] = {0};
+
+int DFS();
 void traceRing();
+void initialize();
+
+void addStack(int data){
+    routeTrack[++top] = data;
+}
+
+int popStack(){
+    return routeTrack[top--];
+}
 
 int main(int argc, const char * argv[]) {
     
-    int i, j;
+    int i, j, signal = FALSE;
     
     scanf("%d", &mapSize);
     
-    int ringMap[mapSize][mapSize+1];
-    int routeTrace[mapSize+1];
-    int visited[MAX_MAP][3] = {FALSE};
+    
     
     for (i = 1; i <= mapSize; i++) {
         for (j = 1; j <= mapSize; j++) {
@@ -34,35 +45,55 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    DFS(ringMap, visited, 1, 0, 0);
+    for (i = 1; i <= mapSize; i++) {
+        initialize();
+        if(DFS(i, i)){
+            printf("\nYes\n");
+            while (top >= 0) {
+                printf("%d ", popStack());
+            }
+            printf("\n");
+            signal = TRUE;
+            break;
+        }else{
+            signal = FALSE;
+        }
+    }
     
-    printf("\n");
+    if (!signal) {
+        printf("\nNo\n");
+    }
+    
     
     return 0;
 }
 
-void DFS (int ringMap[][mapSize], int visited[][3], int start, int rank, int previousNode){
+int DFS (int start, int originalPoint){
     
-    int i, j;
-    visited[start][0] = TRUE;
-    visited[start][1] = rank;
-    visited[start][2] = previousNode;
-    
-    printf("%3d", start);
-    
-    for (i = 1; i <= mapSize; i++) {
-        for (j = 1; j <= mapSize; j++) {
-            if (!visited[j][0] && ringMap[i][j]) {
-                DFS(ringMap, visited, j, rank, start);
-            }else if (visited[j][0] && ringMap[i][j] && visited[j][1] != rank){
-                printf("Find Ring\n");
-            }
+    int j;
+    visited[start] ++;
+    addStack(start);
+    for (j = 1; j <= mapSize; j++) {
+        if (!visited[j] && ringMap[start][j]) {
+            if(DFS(j, originalPoint)) return TRUE;
+            else popStack();
+        }else if (visited[j] && ringMap[start][j] && originalPoint == j){
+            addStack(originalPoint);
+            return TRUE;
         }
     }
-    
+
+    return FALSE;
 }
 
 void traceRing (int visited[][2]){
     
+}
+
+void initialize(){
+    int i;
+    for (i = 1; i <= MAX_MAP; i++) {
+        visited[i] = FALSE;
+    }
 }
 
