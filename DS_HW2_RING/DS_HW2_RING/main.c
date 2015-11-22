@@ -86,10 +86,6 @@ int DFS (int start, int originalPoint){
     return FALSE;
 }
 
-void traceRing (int visited[][2]){
-    
-}
-
 void initialize(){
     int i;
     for (i = 1; i <= MAX_MAP; i++) {
