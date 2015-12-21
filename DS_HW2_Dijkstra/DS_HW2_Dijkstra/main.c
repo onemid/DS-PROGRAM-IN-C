@@ -102,17 +102,19 @@ void initialize(){
 
 int main(int argc, char *argv[]) {
     
+    FILE *inputFile;
     int count, i;
     int beginNode, endNode, start, end, costValue, maxVertex = 0;
     
+    inputFile = fopen("map.txt", "r");
     initialize();
     
-    scanf("%d", &count);
+    fscanf(inputFile,"%d", &count);
     fflush(stdin);
     
     
     for (i = 0; i < count; i++){
-        scanf("%d%d%d", &beginNode, &endNode, &costValue);
+        fscanf(inputFile,"%d%d%d", &beginNode, &endNode, &costValue);
         if (maxVertex < beginNode) {
             maxVertex = beginNode;
         }
@@ -120,7 +122,7 @@ int main(int argc, char *argv[]) {
         
     }
     
-    scanf("%d%d", &start, &end);
+    fscanf(inputFile,"%d%d", &start, &end);
     
     dijkstra(start, end, maxVertex);
     traceRoute(start, end);
