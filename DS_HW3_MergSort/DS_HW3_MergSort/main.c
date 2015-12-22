@@ -28,7 +28,8 @@ int main(int argc, const char * argv[]) {
     
     int middleNum = (inputNum % 2) ? input[(inputNum-1)/2] : (input[inputNum-1] + input[inputNum]) / 2;
     
-    printf("Min= %d, Mid= %d, Max= %d\n", input[0], middleNum, input[inputNum-1]);
+    //printf("Min= %d, Mid= %d, Max= %d\n", input[0], middleNum, input[inputNum-1]);
+    printf("%d\n", (input[0] + middleNum + input[inputNum-1])/3);
     
     return 0;
 }
@@ -51,9 +52,9 @@ void SplitMerge(int unsortArray[], int iBegin, int iEnd, int workingArray[]){
 }
 
 void Merge(int unsortArray[], int iBegin, int iMiddle, int iEnd, int workingArray[]){
-    int i = iBegin, j = iMiddle;
+    int i = iBegin, j = iMiddle, k;
     
-    for (int k = iBegin; k < iEnd; k++) {
+    for (k = iBegin; k < iEnd; k++) {
         if(i < iMiddle && (j >= iEnd || unsortArray[i] <= unsortArray[j])){
             workingArray[k] = unsortArray[i];
             i++;
@@ -64,7 +65,8 @@ void Merge(int unsortArray[], int iBegin, int iMiddle, int iEnd, int workingArra
     }
 }
 void CopyArray(int workingArray[], int iBegin, int iEnd, int unsortArray[]){
-    for (int k = iBegin; k < iEnd; k++) {
+    int k;
+    for (k = iBegin; k < iEnd; k++) {
         unsortArray[k] = workingArray[k];
     }
 }

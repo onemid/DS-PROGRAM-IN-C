@@ -57,7 +57,7 @@ int main(int argc, const char * argv[]) {
     
     while (1) {
         scanf("%d %d", &pointSet[count].x, &pointSet[count].y);
-        if (pointSet[count].x == -1) {
+        if (!pointSet[count].x && !pointSet[count].y) {
             break;
         }
         count++;
